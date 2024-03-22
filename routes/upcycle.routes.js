@@ -1,6 +1,8 @@
 const router = require("express").Router(); 
 const Vendor = require("../models/Vendor.model");
 const mongoose = require("mongoose");
+const upload = require("../middleware/upload");
+
 
 
   //GET /vendor-form/
@@ -41,7 +43,7 @@ router.get("/vendor-form/:vendorId", (req, res) => {
 });
 
 //POST /vendor-form
-router.post("/vendor-form", (req, res, next) => {
+router.post("/vendor-form", upload.array("UploadImages", 5), (req, res, next) => {
     const {
       ProductInformation: { Product, StateofProduct, Description, Label, Usage, Measures, Weight, Material, UploadImage },
       VendorInformation: { City, PostalCode, Address, Region, Colony, Specifications },
@@ -53,10 +55,15 @@ router.post("/vendor-form", (req, res, next) => {
       VendorInformation: { City, PostalCode, Address, Region, Colony, Specifications },
       PaymentInformation: { DeliveryAdoption, BankDetails, Name }
     };
-  
+
+    if (req.file) {
+      newVendor.ProductInformation.UploadImage = req.file.path;
+    }
+
     Vendor.create(newVendor)
       .then(() => {
         res.json(newVendor);
+        res.send("File has been uploaded");
       })
       .catch((err) => {
         res.status(500);

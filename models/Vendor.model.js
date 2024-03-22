@@ -4,11 +4,11 @@ const vendorSchema = new Schema({
   ProductInformation: {
     Product: {
       type: String,
-      required: true,
+    //   required: true,
     },
     StateofProduct: {
       type: String,
-      required: true,
+    //   required: true,
     },
     Description: {
       type: String,
@@ -20,13 +20,22 @@ const vendorSchema = new Schema({
       type: [String],
     },
     Measures: {
-      height: { type: Number, required: true },
-      width: { type: Number, required: true },
-      depth: { type: Number, required: true },
+       height: { 
+        type: Number, 
+        // required: true 
+    },
+       width: { 
+        type: Number, 
+        // required: true
+     },
+       depth: { 
+        type: Number, 
+        // required: true 
+    }
     },
     Weight: {
       type: Number,
-      required: true,
+    //   required: true,
     },
     Material: {
       type: [String],
@@ -39,41 +48,41 @@ const vendorSchema = new Schema({
   VendorInformation:{
     City: {
       type: String,
-      required: true,
+    //   required: true,
     },
     PostalCode: {
       type: Number,
-      required: true,
+    //   required: true,
     },
     Address: {
       type: String,
-      required: true,
+    //   required: true,
     },
     Region: {
         type: String,
-        required: true,
+        // required: true,
     },
     Colony: {
         type: String,
-        required: true,
+        // required: true,
     },
     Specifications: {
         type: Boolean,
-        required: true,
+        // required: true,
     }
   },
   PaymentInformation:{
     DeliveryAdoption: {
         type: Number,
-        required: true,
+        // required: true,
         },
     BankDetails: {
         type: Number,
-        required: true,
+        // required: true,
         },
     Name: {
         type: String,
-        required: true,
+        // required: true,
         },
     }
     });
