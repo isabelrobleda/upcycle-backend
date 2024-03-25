@@ -42,7 +42,6 @@ const vendorSchema = new Schema({
     },
     UploadImage: {
       type: String,
-      required: true,
     },
   },
   VendorInformation:{
