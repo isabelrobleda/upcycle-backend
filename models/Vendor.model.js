@@ -1,91 +1,75 @@
 const { Schema, model } = require("mongoose");
 
 const vendorSchema = new Schema({
-  ProductInformation: {
-    Product: {
-      type: String,
-    //   required: true,
-    },
-    StateofProduct: {
-      type: String,
-    //   required: true,
-    },
-    Description: {
+  PaymentInformation: {
+    product: {
       type: String,
     },
-    Label: {
+    stateOfProduct: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    brand: {
       type: [String],
     },
-    Usage: {
+    usage: {
       type: [String],
     },
-    Measures: {
-       height: { 
-        type: Number, 
-        // required: true 
-    },
-       width: { 
-        type: Number, 
-        // required: true
-     },
-       depth: { 
-        type: Number, 
-        // required: true 
-    }
-    },
-    Weight: {
+    height: {
       type: Number,
-    //   required: true,
     },
-    Material: {
+    width: {
+      type: Number,
+    },
+    depth: {
+      type: Number,
+    },
+    weight: {
+      type: Number,
+    },
+    material: {
       type: [String],
     },
     UploadImage: {
       type: String,
     },
   },
-  VendorInformation:{
-    City: {
-      type: String,
-    //   required: true,
-    },
-    PostalCode: {
-      type: Number,
-    //   required: true,
-    },
-    Address: {
-      type: String,
-    //   required: true,
-    },
-    Region: {
-        type: String,
-        // required: true,
-    },
-    Colony: {
-        type: String,
-        // required: true,
-    },
-    Specifications: {
-        type: Boolean,
-        // required: true,
-    }
-  },
-  PaymentInformation:{
-    DeliveryAdoption: {
-        type: Number,
-        // required: true,
-        },
-    BankDetails: {
-        type: Number,
-        // required: true,
-        },
-    Name: {
-        type: String,
-        // required: true,
-        },
-    }
-    });
 
+  VendorInformation: {
+    city: {
+      type: String,
+    },
+    postalCode: {
+      type: Number,
+    },
+    address: {
+      type: String,
+    },
+    region: {
+      type: String,
+    },
+    colony: {
+      type: String,
+    },
+    seVuela: {
+      type: Boolean,
+    },
+  },
+
+  PaymentInformation: {
+    deliveryAdoption: {
+      type: String,
+    },
+    bankDetails: {
+      type: Number,
+    },
+    name: {
+      type: String,
+    },
+  },
+});
 
 const Vendor = model("Vendor", vendorSchema);
 

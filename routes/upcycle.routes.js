@@ -1,165 +1,106 @@
-const router = require("express").Router(); 
+const router = require("express").Router();
 const Vendor = require("../models/Vendor.model");
-const mongoose = require("mongoose");
 const upload = require("../middleware/upload");
-const nodemailer = require('nodemailer');
-const fs = require('fs');
+const nodemailer = require("nodemailer");
+const fs = require("fs");
+require("dotenv").config();
+
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: "smtp.gmail.com",
   port: 587,
   auth: {
-    user: 'isabel.robleda@gmail.com',
-    pass: 'uhrs oejz vwkv qtjb'
-  }
+    user: "isabel.robleda@gmail.com",
+    pass: process.env.EMAIL_PASSWORD,
+  },
 });
 
 const sendEmail = (formData, files) => {
+  
+    const { ProductInformation, VendorInformation, PaymentInformation } = formData;
 
-  const {
-    ProductInformation,
-    VendorInformation,
-    PaymentInformation,
-  } = formData;
+    const mailOptions = {
+      from: "upcyclevendor@gmail.com",
+      to: "isabel.robleda@gmail.com", // Change this to the recipient's email address
+      subject: "Upcycle Vendor Form",
+      text: `Form Data:\nProduct: ${
+        ProductInformation ? ProductInformation.product : "N/A"
+      }\nDescription: ${
+        ProductInformation ? ProductInformation.description : "N/A"
+      }\nState of Product: ${
+        ProductInformation ? ProductInformation.stateOfProduct : "N/A"
+      }\nBrand: ${ProductInformation ? ProductInformation.brand : "N/A"
+      }\nUsage: ${ProductInformation ? ProductInformation.usage : "N/A"
+      }\nHeight: ${ProductInformation ? ProductInformation.height : "N/A"
+      }\nWidth: ${ProductInformation ? ProductInformation.width : "N/A"
+      }\nDepth: ${ProductInformation ? ProductInformation.depth : "N/A"
+      }\nWeight: ${ProductInformation ? ProductInformation.weight : "N/A"
+      }\nMaterial: ${ProductInformation ? ProductInformation.material : "N/A"
+      
+      }\nCity: ${VendorInformation ? VendorInformation.city : "N/A"
+      }\nPostal Code: ${VendorInformation ? VendorInformation.postalCode : "N/A"
+      }\nAddress: ${VendorInformation ? VendorInformation.address : "N/A"
+      }\nRegion: ${VendorInformation ? VendorInformation.region : "N/A"
+      }\nColony: ${VendorInformation ? VendorInformation.colony : "N/A"
+      }\nSpecifications: ${VendorInformation ? VendorInformation.seVuela : "N/A"
+      }
+      
+      \nDelivery Adoption: ${
+        PaymentInformation ? PaymentInformation.deliveryAdoption : "N/A"
+      }\nCLABE: ${
+        PaymentInformation ? PaymentInformation.bankDetails : "N/A"
+      }\nName: ${PaymentInformation ? PaymentInformation.name : "N/A"}`,
 
-  const mailOptions = {
-    from: "upcyclevendor@gmail.com",
-    to: "isabel.robleda@gmail.com", // Change this to the recipient's email address
-    subject: "Upcycle Vendor Form",
-    text: `Form Data:\nProduct: ${ProductInformation ? ProductInformation.Product : 'N/A'}\nDescription: ${ProductInformation ? ProductInformation.Description : 'N/A'}\nState of Product: ${ProductInformation ? ProductInformation.StateofProduct : 'N/A'}\nVendor Information: ${VendorInformation ? `${VendorInformation.City}, ${VendorInformation.PostalCode}, ${VendorInformation.Address}, ${VendorInformation.Region}, ${VendorInformation.Colony}, ${VendorInformation.Specifications}` : 'N/A'}\nPayment Information: ${PaymentInformation ? `${PaymentInformation.DeliveryAdoption}, ${PaymentInformation.BankDetails}, ${PaymentInformation.Name}` : 'N/A'}`,
-    attachments: files.map((file) => ({
-      filename: file.originalname,
-      content: fs.readFileSync(file.path), 
-      encoding: 'base64' // Set encoding to base64
-    })),
-  };
+      attachments: files.map((file) => {
+        return {
+          filename: file.originalname,
+          path: file.path,
+        };
+      }),
+    };
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.error("Error sending email:", err);
-    } else {
-      console.log("Email sent:", info.response);
-    }
-  });
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error("Error sending email:", err);
+        reject(err);
+      } else {
+        console.log("Email sent:", info.response);
+        resolve(info);
+      }
+    });
 };
-  //GET /vendor-form/
 
-router.get("/vendor-form", (req, res) => {
-    Vendor.find()
-      .then((vendor) => {
-        console.log("Retrieved vendor ->", vendor);
-        res.json(vendor);
-      })
-      .catch((error) => {
-        console.error("Error while retrieving vendor ->", error);
-        res.status(500).send({ error: "Failed to retrieve vendor" });
-      });
-  }
-); 
-
-//GET /vendor-form/:vendorId
-
-router.get("/vendor-form/:vendorId", (req, res) => {
-    const { vendorId } = req.params;
-  
-    if (!mongoose.Types.ObjectId.isValid(vendorId)) {
-      res.status(400).json({ message: "Specified id is not valid" });
-      return;
-    }
-  
-    Vendor.findById(vendorId)
-      .then((vendor) => {
-        console.log("Retrieved vendor ->", vendor);
-        res.json(vendor);
-      })
-      .catch((error) => {
-        console.error("Error while retrieving vendor ->", error);
-        res.status(500).send({ error: "Failed to retrieve vendor" });
-      });
-  
-});
-
-//POST /vendor-form
 router.post("/vendor-form", upload.array("UploadImages", 5), (req, res, next) => {
-  const {
-    ProductInformation,
-    VendorInformation,
-    PaymentInformation,
-  } = req.body;
+  const { ProductInformation, VendorInformation, PaymentInformation } = req.body;
 
   const files = req.files;
 
-  if (files) {
+   if (files) {
     files.forEach((file) => {
       console.log(file.path);
     });
   }
 
-  Vendor.create({ ProductInformation, VendorInformation, PaymentInformation })
+  Vendor.create({
+    ProductInformation: req.body.ProductInformation || {},
+    VendorInformation: req.body.VendorInformation || {},
+    PaymentInformation: req.body.PaymentInformation || {},
+  })
     .then((newVendor) => {
-
-       // Send email with form data
-       sendEmail({ ProductInformation, VendorInformation, PaymentInformation }, req.files);
-       res.json(newVendor);
-
+      sendEmail(
+        {
+          ProductInformation: req.body.ProductInformation || {},
+          VendorInformation: req.body.VendorInformation || {},
+          PaymentInformation: req.body.PaymentInformation || {},
+        },
+        req.files
+      );
+        res.json(newVendor); 
     })
     .catch((err) => {
       console.error(err);
       res.status(500).send("Error occurred while uploading file");
     });
 });
-
-//PUT /vendor-form/:vendorId
-router.put("/vendor-form/:vendorId", (req, res) => {
-    const { vendorId } = req.params;
-    const {
-      ProductInformation: { Product, StateofProduct, Description, Label, Usage, Measures, Weight, Material, UploadImage },
-      VendorInformation: { City, PostalCode, Address, Region, Colony, Specifications },
-      PaymentInformation: { DeliveryAdoption, BankDetails, Name }
-    } = req.body;
-  
-    if (!mongoose.Types.ObjectId.isValid(vendorId)) {
-      res.status(400).json({ message: "Specified id is not valid" });
-      return;
-    }
-  
-    Vendor.findByIdAndUpdate(
-      vendorId,
-      {
-        ProductInformation: { Product, StateofProduct, Description, Label, Usage, Measures, Weight, Material, UploadImage },
-        VendorInformation: { City, PostalCode, Address, Region, Colony, Specifications },
-        PaymentInformation: { DeliveryAdoption, BankDetails, Name }
-      },
-      { new: true }
-    )
-      .then((vendor) => {
-        res.json(vendor);
-      })
-      .catch((error) => {
-        console.error("Error while updating vendor ->", error);
-        res.status(500).send({ error: "Failed to update vendor" });
-      });
-  });
-
-//DELETE /vendor-form/:vendorId
-router.delete("/vendor-form/:vendorId", (req, res) => {
-    const { vendorId } = req.params;
-  
-    if (!mongoose.Types.ObjectId.isValid(vendorId)) {
-      res.status(400).json({ message: "Specified id is not valid" });
-      return;
-    }
-  
-    Vendor.findByIdAndDelete(vendorId)
-      .then(() => {
-        res.json({ message: `Vendor with id ${vendorId} is removed successfully.` });
-      })
-      .catch((error) => {
-        console.error("Error while removing vendor ->", error);
-        res.status(500).send({ error: "Failed to remove vendor" });
-      });
-  });
-
-
 
 module.exports = router;
