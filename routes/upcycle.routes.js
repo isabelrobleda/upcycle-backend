@@ -17,39 +17,47 @@ const transporter = nodemailer.createTransport({
 
 const sendEmail = (formData, files) => {
   
-    const { ProductInformation, VendorInformation, PaymentInformation } = formData;
+    const { Urgency, ProductInformation, VendorInformation, PaymentInformation } = formData;
 
     const mailOptions = {
       from: "upcyclevendor@gmail.com",
       to: "isabel.robleda@gmail.com", // Change this to the recipient's email address
       subject: "Upcycle Vendor Form",
-      text: `Form Data:\nProduct: ${
+      text: `Datos del Vendedor:
+      \nUrgencia: ${Urgency ? Urgency : "N/A"}
+      \nProducto: ${
         ProductInformation ? ProductInformation.product : "N/A"
-      }\nDescription: ${
+      }\nDescripcion: ${
         ProductInformation ? ProductInformation.description : "N/A"
-      }\nState of Product: ${
+      }\nEstado del Producto: ${
         ProductInformation ? ProductInformation.stateOfProduct : "N/A"
-      }\nBrand: ${ProductInformation ? ProductInformation.brand : "N/A"
-      }\nUsage: ${ProductInformation ? ProductInformation.usage : "N/A"
-      }\nHeight: ${ProductInformation ? ProductInformation.height : "N/A"
-      }\nWidth: ${ProductInformation ? ProductInformation.width : "N/A"
-      }\nDepth: ${ProductInformation ? ProductInformation.depth : "N/A"
-      }\nWeight: ${ProductInformation ? ProductInformation.weight : "N/A"
+      }\nMarca: ${ProductInformation ? ProductInformation.brand : "N/A"
+      }\nUso: ${ProductInformation ? ProductInformation.usage : "N/A"
+      }\nAlto en cm: ${ProductInformation ? ProductInformation.height : "N/A"
+      }\nLargo en cm: ${ProductInformation ? ProductInformation.width : "N/A"
+      }\nAncho en cm: ${ProductInformation ? ProductInformation.depth : "N/A"
+      }\nPeso en kg: ${ProductInformation ? ProductInformation.weight : "N/A"
+      }\nPrecio Compra: ${ProductInformation ? ProductInformation.priceInput : "N/A"
       }\nMaterial: ${ProductInformation ? ProductInformation.material : "N/A"
-      
-      }\nCity: ${VendorInformation ? VendorInformation.city : "N/A"
-      }\nPostal Code: ${VendorInformation ? VendorInformation.postalCode : "N/A"
-      }\nAddress: ${VendorInformation ? VendorInformation.address : "N/A"
-      }\nRegion: ${VendorInformation ? VendorInformation.region : "N/A"
-      }\nColony: ${VendorInformation ? VendorInformation.colony : "N/A"
-      }\nSpecifications: ${VendorInformation ? VendorInformation.seVuela : "N/A"
-      }
-      
-      \nDelivery Adoption: ${
+      }\nCiudad: ${VendorInformation ? VendorInformation.city : "N/A"
+      }\nCódigo Postal: ${VendorInformation ? VendorInformation.postalCode : "N/A"
+      }\nCalle: ${VendorInformation ? VendorInformation.address : "N/A"
+      }\nAlcaldía: ${VendorInformation ? VendorInformation.region : "N/A"
+      }\nColonia: ${VendorInformation ? VendorInformation.colony : "N/A"
+      }\nLink Mapa: ${VendorInformation ? VendorInformation.map : "N/A"
+      }\nSe Vuela: ${VendorInformation ? VendorInformation.seVuela : "N/A"
+      }\nNo. pisos a volar: ${VendorInformation ? VendorInformation.floors : "N/A"
+      }\nElevador: ${VendorInformation ? VendorInformation.elevator : "N/A"}
+      \nNo. pisos sin elevador: ${VendorInformation ? VendorInformation.noElevatorFloors : "N/A"}
+      \nSe desarma: ${VendorInformation ? VendorInformation.elevator : "N/A"}
+      \nDesea cubrir envíos: ${
         PaymentInformation ? PaymentInformation.deliveryAdoption : "N/A"
+      }\nNombre del Titular: ${PaymentInformation ? PaymentInformation.nameOfHolder : "N/A"
       }\nCLABE: ${
         PaymentInformation ? PaymentInformation.bankDetails : "N/A"
-      }\nName: ${PaymentInformation ? PaymentInformation.name : "N/A"}`,
+      }\nBanco: ${PaymentInformation ? PaymentInformation.nameOfBank : "N/A"
+      }\nCuenta: ${PaymentInformation ? PaymentInformation.accountNumber : "N/A"
+      }\nEmail: ${PaymentInformation ? PaymentInformation.name : "N/A"}`,
 
       attachments: files.map((file) => {
         return {
@@ -71,7 +79,8 @@ const sendEmail = (formData, files) => {
 };
 
 router.post("/vendor-form", upload.array("UploadImages", 5), (req, res, next) => {
-  const { ProductInformation, VendorInformation, PaymentInformation } = req.body;
+ 
+  const { Urgency, ProductInformation, VendorInformation, PaymentInformation } = req.body;
 
   const files = req.files;
 
@@ -82,6 +91,7 @@ router.post("/vendor-form", upload.array("UploadImages", 5), (req, res, next) =>
   }
 
   Vendor.create({
+    Urgency: req.body.Urgency,
     ProductInformation: req.body.ProductInformation || {},
     VendorInformation: req.body.VendorInformation || {},
     PaymentInformation: req.body.PaymentInformation || {},
@@ -89,6 +99,7 @@ router.post("/vendor-form", upload.array("UploadImages", 5), (req, res, next) =>
     .then((newVendor) => {
       sendEmail(
         {
+          Urgency: req.body.Urgency,
           ProductInformation: req.body.ProductInformation || {},
           VendorInformation: req.body.VendorInformation || {},
           PaymentInformation: req.body.PaymentInformation || {},

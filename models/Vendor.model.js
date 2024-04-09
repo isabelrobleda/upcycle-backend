@@ -1,6 +1,11 @@
 const { Schema, model } = require("mongoose");
 
 const vendorSchema = new Schema({
+  
+  Urgency: {
+    type: String,
+  },
+
   PaymentInformation: {
     product: {
       type: String,
@@ -35,6 +40,9 @@ const vendorSchema = new Schema({
     UploadImage: {
       type: String,
     },
+    priceInput: {
+      type: String,
+    },
   },
 
   VendorInformation: {
@@ -53,8 +61,23 @@ const vendorSchema = new Schema({
     colony: {
       type: String,
     },
+    elevator: {
+      type: Boolean,
+    },
+    noElevatorFloors: {
+      type: Number,
+    },
+    dismantle: {
+      type: Boolean,
+    },
     seVuela: {
       type: Boolean,
+    },
+    floors: {
+      type: Number,
+    },
+    map: {
+      type: String,
     },
   },
 
@@ -62,9 +85,19 @@ const vendorSchema = new Schema({
     deliveryAdoption: {
       type: String,
     },
+    nameOfHolder: {
+      type: String,
+    },
     bankDetails: {
       type: Number,
     },
+    accountNumber: {
+      type: String,
+    },
+    nameOfBank: {
+      type: String,
+    },
+
     name: {
       type: String,
     },

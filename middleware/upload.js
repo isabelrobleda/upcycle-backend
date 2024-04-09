@@ -14,15 +14,15 @@ const storage = multer.diskStorage({
 const upload = multer({ 
     storage: storage,
     fileFilter: (req, file, cb) => {
-        if(file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg"){
+        if(file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "video/mp4" || file.mimetype == "video/mov"){
             cb(null, true);
         } else {
             cb(null, false);
-            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+            return cb(new Error('Only .png, .jpg .jpeg, .mov and .mp4 format allowed!'));
         }
     },
     limits: {
-        fileSize: 1024 * 1024
+        fileSize: 20 * 1024 * 1024
     }
 });
 
