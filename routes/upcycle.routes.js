@@ -49,14 +49,13 @@ const sendEmail = (formData, files) => {
       }\nNo. pisos a volar: ${VendorInformation ? VendorInformation.floors : "N/A"
       }\nElevador: ${VendorInformation ? VendorInformation.elevator : "N/A"}
       \nNo. pisos sin elevador: ${VendorInformation ? VendorInformation.noElevatorFloors : "N/A"}
-      \nSe desarma: ${VendorInformation ? VendorInformation.elevator : "N/A"}
-      \nDesea cubrir envíos: ${
-        PaymentInformation ? PaymentInformation.deliveryAdoption : "N/A"
+      \nSe desarma: ${VendorInformation ? VendorInformation.elevator : "N/A"
       }\nNombre del Titular: ${PaymentInformation ? PaymentInformation.nameOfHolder : "N/A"
       }\nCLABE: ${
         PaymentInformation ? PaymentInformation.bankDetails : "N/A"
       }\nBanco: ${PaymentInformation ? PaymentInformation.nameOfBank : "N/A"
       }\nCuenta: ${PaymentInformation ? PaymentInformation.accountNumber : "N/A"
+      }\nCelular: ${PaymentInformation ? PaymentInformation.phone : "N/A"
       }\nEmail: ${PaymentInformation ? PaymentInformation.name : "N/A"}`,
 
       attachments: files.map((file) => {

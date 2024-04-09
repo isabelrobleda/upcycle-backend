@@ -82,9 +82,6 @@ const vendorSchema = new Schema({
   },
 
   PaymentInformation: {
-    deliveryAdoption: {
-      type: String,
-    },
     nameOfHolder: {
       type: String,
     },
@@ -97,8 +94,10 @@ const vendorSchema = new Schema({
     nameOfBank: {
       type: String,
     },
-
     name: {
+      type: String,
+    },
+    phone: {
       type: String,
     },
   },
