@@ -15,16 +15,20 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+
+
+
 const sendEmail = (formData, files) => {
   
-    const { Urgency, ProductInformation, VendorInformation, PaymentInformation } = formData;
-
+    const { FirstForm, ProductInformation, VendorInformation, PaymentInformation } = formData;
+    
     const mailOptions = {
       from: "upcyclevendor@gmail.com",
       to: "isabel.robleda@gmail.com", // Change this to the recipient's email address
       subject: "Upcycle Vendor Form",
       text: `Datos del Vendedor:
-      \nUrgencia: ${Urgency ? Urgency : "N/A"}
+      \nUrgencia: ${FirstForm ? FirstForm.Urgency : "N/A"}
+      \nFundación a Donar: ${FirstForm ? FirstForm.FoundationToDonate : "N/A"}
       \nProducto: ${
         ProductInformation ? ProductInformation.product : "N/A"
       }\nDescripcion: ${
@@ -37,7 +41,9 @@ const sendEmail = (formData, files) => {
       }\nLargo en cm: ${ProductInformation ? ProductInformation.width : "N/A"
       }\nAncho en cm: ${ProductInformation ? ProductInformation.depth : "N/A"
       }\nPeso en kg: ${ProductInformation ? ProductInformation.weight : "N/A"
-      }\nPrecio Compra: ${ProductInformation ? ProductInformation.priceInput : "N/A"
+      }\nPrecio si fuera nuevo: ${ProductInformation ? ProductInformation.priceInput : "N/A"
+      }\nPrecio deseado: ${ProductInformation ? ProductInformation.desiredSellingPrice : "N/A"
+      }\nPrecio aproximado: ${ProductInformation ? ProductInformation.approxSellingPrice : "N/A"
       }\nMaterial: ${ProductInformation ? ProductInformation.material : "N/A"
       }\nCiudad: ${VendorInformation ? VendorInformation.city : "N/A"
       }\nCódigo Postal: ${VendorInformation ? VendorInformation.postalCode : "N/A"
@@ -78,9 +84,10 @@ const sendEmail = (formData, files) => {
 };
 
 router.post("/vendor-form", upload.array("UploadImages", 5), (req, res, next) => {
- 
-  const { Urgency, ProductInformation, VendorInformation, PaymentInformation } = req.body;
+  
 
+  const { FirstForm, ProductInformation, VendorInformation, PaymentInformation } = req.body;
+  
   const files = req.files;
 
    if (files) {
@@ -90,7 +97,7 @@ router.post("/vendor-form", upload.array("UploadImages", 5), (req, res, next) =>
   }
 
   Vendor.create({
-    Urgency: req.body.Urgency,
+    FirstForm: req.body.FirstForm || {},
     ProductInformation: req.body.ProductInformation || {},
     VendorInformation: req.body.VendorInformation || {},
     PaymentInformation: req.body.PaymentInformation || {},
@@ -98,7 +105,7 @@ router.post("/vendor-form", upload.array("UploadImages", 5), (req, res, next) =>
     .then((newVendor) => {
       sendEmail(
         {
-          Urgency: req.body.Urgency,
+          FirstForm: req.body.FirstForm || {},
           ProductInformation: req.body.ProductInformation || {},
           VendorInformation: req.body.VendorInformation || {},
           PaymentInformation: req.body.PaymentInformation || {},

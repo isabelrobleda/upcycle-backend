@@ -2,8 +2,14 @@ const { Schema, model } = require("mongoose");
 
 const vendorSchema = new Schema({
   
-  Urgency: {
-    type: String,
+  FirstForm: {
+    Urgency: {
+      type: String,
+    },
+  
+    FoundationToDonate: {
+      type: String,
+    },
   },
 
   PaymentInformation: {
@@ -41,6 +47,12 @@ const vendorSchema = new Schema({
       type: String,
     },
     priceInput: {
+      type: String,
+    },
+    desiredSellingPrice: {
+      type: String,
+    },
+    approxSellingPrice: {
       type: String,
     },
   },
