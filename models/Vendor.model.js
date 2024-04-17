@@ -112,6 +112,21 @@ const vendorSchema = new Schema({
     phone: {
       type: String,
     },
+    fullName: {
+      type: String,
+    },
+    nationality: {
+      type: [String],
+    },
+    gender: {
+      type: [String],
+    },
+    birthDate: {
+      type: Date,
+    },
+    reasonOfSale: {
+      type: [String],
+    }
   },
 });
 

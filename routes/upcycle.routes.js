@@ -62,8 +62,14 @@ const sendEmail = (formData, files) => {
       }\nBanco: ${PaymentInformation ? PaymentInformation.nameOfBank : "N/A"
       }\nCuenta: ${PaymentInformation ? PaymentInformation.accountNumber : "N/A"
       }\nCelular: ${PaymentInformation ? PaymentInformation.phone : "N/A"
-      }\nEmail: ${PaymentInformation ? PaymentInformation.name : "N/A"}`,
-
+      }\nEmail: ${PaymentInformation ? PaymentInformation.name : "N/A"
+      }\nNombre Completo: ${PaymentInformation ? PaymentInformation.fullName : "N/A"
+      }\nNacionalidad: ${PaymentInformation ? PaymentInformation.nationality : "N/A"
+      }\nGénero: ${PaymentInformation ? PaymentInformation.gender : "N/A"
+      }\nFecha de Nacimiento: ${PaymentInformation ? PaymentInformation.birthDate : "N/A"
+      }\nRazón de Venta: ${PaymentInformation ? PaymentInformation.reasonOfSale : "N/A"}
+    
+      `,
       attachments: files.map((file) => {
         return {
           filename: file.originalname,
