@@ -14,7 +14,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const FRONTEND_URL =
-  process.env.ORIGIN || "http://localhost:5173" || "https://upcyclemyhome.com/";
+  process.env.ORIGIN || "http://localhost:5173" || "https://upcyclemyhome.com";
 
 // Middleware configuration
 module.exports = (app) => {
@@ -25,7 +25,7 @@ module.exports = (app) => {
   // controls a very specific header to pass headers from the frontend
   app.use(
     cors({
-      origin: ["https://upcyclemyhome.com/", "http://localhost:5173"], // adjust as necessary
+      origin: ["https://upcyclemyhome.com", "http://localhost:5173"], // adjust as necessary
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       allowedHeaders: "Content-Type, Authorization",
     })
