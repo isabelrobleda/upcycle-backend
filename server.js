@@ -15,5 +15,5 @@ const server = https.createServer(httpsOptions, app);
 // Start Server
 const PORT = process.env.PORT || 5005;
 server.listen(PORT, () => {
-  console.log(`Server listening on https://localhost:${PORT}`);
+  console.log(`Server listening on http://localhost:${PORT}`);
 });
