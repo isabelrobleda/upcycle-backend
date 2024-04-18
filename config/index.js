@@ -8,7 +8,7 @@ module.exports = function(app) {
 
   // Middleware Configuration
   app.use(cors({
-    origin: ['https://upcyclemyhome.com', 'https://localhost:5173'],
+    origin: ['https://upcyclemyhome.com', 'https://localhost:5005'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
