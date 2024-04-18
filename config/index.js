@@ -1,45 +1,35 @@
-const express = require("express");
-const https = require("https");
-const fs = require("fs");
+// const express = require("express");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const path = require("path");
-
-// App Initialization
+const express = require("express");
 const app = express();
-app.set("trust proxy", 1);
 
-// Load SSL/TLS Certificates
-const key = fs.readFileSync(path.join(__dirname, 'localhost-key.pem'), 'utf8');
-const cert = fs.readFileSync(path.join(__dirname, 'localhost.pem'), 'utf8');
+module.exports = function(app) {
 
-// CORS Configuration
-app.use(cors({
-  origin: ['https://upcyclemyhome.com', 'http://localhost:5173'], // Corrected to include both origins
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+  // Middleware Configuration
+  app.use(cors({
+    origin: ['https://upcyclemyhome.com', 'http://localhost:5173'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
 
-// Other Middleware
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-// Error Handling Middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
-// HTTPS Server Setup
-const httpsOptions = { key, cert };
-const server = https.createServer(httpsOptions, app);
-
-// Start Server
-const PORT = process.env.PORT || 5005;
-server.listen(PORT, () => {
-  console.log(`Server listening on https://localhost:${PORT}`);
-});
+  app.use(logger("dev"));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
+  
+  // Error Handling Middleware
+  // Correctly implemented as it now correctly uses four parameters
+  app.use((err, req, res, next) => {
+    // Check if the headers have already been sent to the client
+    if (res.headersSent) {
+      // If headers are sent, delegate to the default Express error handler
+      return next(err);
+    }
+    // Otherwise, log the error and send an appropriate server error response
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+  });
+}

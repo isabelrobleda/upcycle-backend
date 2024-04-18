@@ -15,9 +15,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
-
-
 const sendEmail = (formData, files) => {
   
     const { FirstForm, ProductInformation, VendorInformation, PaymentInformation } = formData;

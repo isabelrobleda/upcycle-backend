@@ -1,8 +1,19 @@
-// const app = require("./app");
+const https = require("https");
+const fs = require("fs");
+const app = require("./app");
 
-// // ℹ️ Sets the PORT for our app to have access to it. If no env has been set, we hard code it to 5005
-// const PORT = process.env.PORT || 5005;
+// Load SSL/TLS Certificates
+const keyPath = '/Users/isabelrobleda/Desktop/Upcycle/upcycle-vendor-form/upcycle-backend/localhost-key.pem';
+const certPath = '/Users/isabelrobleda/Desktop/Upcycle/upcycle-vendor-form/upcycle-backend/localhost.pem';
+const key = fs.readFileSync(keyPath, 'utf8');
+const cert = fs.readFileSync(certPath, 'utf8');
+const httpsOptions = { key, cert };
 
-// app.listen(PORT, () => {
-//   console.log(`Server listening on https://localhost:${PORT}`);
-// });
+// HTTPS Server Setup
+const server = https.createServer(httpsOptions, app);
+
+// Start Server
+const PORT = process.env.PORT || 5005;
+server.listen(PORT, () => {
+  console.log(`Server listening on https://localhost:${PORT}`);
+});
