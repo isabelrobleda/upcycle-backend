@@ -25,7 +25,7 @@ module.exports = (app) => {
   // controls a very specific header to pass headers from the frontend
   app.use(
     cors({
-      origin: ["https://upcyclemyhome.com", "http://localhost:5173"], // adjust as necessary
+      origin: ["https://upcyclemyhome.com/", "http://localhost:5173"], // adjust as necessary
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       allowedHeaders: "Content-Type, Authorization",
     })
