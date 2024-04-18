@@ -1,4 +1,3 @@
-// const express = require("express");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -9,7 +8,7 @@ module.exports = function(app) {
 
   // Middleware Configuration
   app.use(cors({
-    origin: ['https://upcyclemyhome.com', 'http://localhost:5173'],
+    origin: ['https://upcyclemyhome.com', 'https://localhost:5173'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
