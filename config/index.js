@@ -9,11 +9,9 @@ const FRONTEND_URL = process.env.ORIGIN  || "https://upcyclemyhome.com";
 module.exports = (app) => {
   app.set("trust proxy", 1);
 
-  // Enabling CORS properly
-  const cors = require('cors');
 
 app.use(cors({
-  origin: 'https://upcyclemyhome.com', // Or use '*' to allow all domains
+  origin: 'https://upcyclemyhome.com' || "http://localhost:5173", // Point to the frontend URL
   credentials: true, // If you're dealing with cookies
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed request methods
   allowedHeaders: ['Content-Type', 'Authorization'] // Allowed request headers
