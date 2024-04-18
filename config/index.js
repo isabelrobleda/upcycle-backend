@@ -14,7 +14,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const FRONTEND_URL =
-  process.env.ORIGIN || "http://localhost:5173" || "https://upcyclemyhome.com";
+  process.env.ORIGIN || "http://localhost:5173" || "https://upcyclemyhome.com/";
 
 // Middleware configuration
 module.exports = (app) => {
