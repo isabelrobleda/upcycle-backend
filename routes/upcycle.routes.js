@@ -23,13 +23,13 @@ const sendEmail = (formData, files) => {
     const { FirstForm, ProductInformation, VendorInformation, PaymentInformation } = formData;
     
     const mailOptions = {
-      from: "upcyclevendor@gmail.com",
+      from: "hola@upcyclemex.com",
       to: "hola@upcyclemex.com",  // Change this to the recipient's email address
-      subject: "Upcycle Vendor Form",
+      subject: "Upcycle Forma Vendedor",
       text: `Datos del Vendedor:
       \nUrgencia: ${FirstForm ? FirstForm.Urgency : "N/A"}
-      \nFundación a Donar: ${FirstForm ? FirstForm.FoundationToDonate : "N/A"}
-      \nProducto: ${
+      \nFundación a Donar: ${FirstForm ? FirstForm.FoundationToDonate : "N/A"
+      }\nProducto: ${
         ProductInformation ? ProductInformation.product : "N/A"
       }\nDescripcion: ${
         ProductInformation ? ProductInformation.description : "N/A"
@@ -53,9 +53,9 @@ const sendEmail = (formData, files) => {
       }\nLink Mapa: ${VendorInformation ? VendorInformation.map : "N/A"
       }\nSe Vuela: ${VendorInformation ? VendorInformation.seVuela : "N/A"
       }\nNo. pisos a volar: ${VendorInformation ? VendorInformation.floors : "N/A"
-      }\nElevador: ${VendorInformation ? VendorInformation.elevator : "N/A"}
-      \nNo. pisos sin elevador: ${VendorInformation ? VendorInformation.noElevatorFloors : "N/A"}
-      \nSe desarma: ${VendorInformation ? VendorInformation.elevator : "N/A"
+      }\nElevador: ${VendorInformation ? VendorInformation.elevator : "N/A"
+      }\nNo. pisos sin elevador: ${VendorInformation ? VendorInformation.noElevatorFloors : "N/A"
+      }\nSe desarma: ${VendorInformation ? VendorInformation.elevator : "N/A"
       }\nNombre del Titular: ${PaymentInformation ? PaymentInformation.nameOfHolder : "N/A"
       }\nCLABE: ${
         PaymentInformation ? PaymentInformation.bankDetails : "N/A"
