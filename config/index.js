@@ -11,7 +11,7 @@ module.exports = (app) => {
 
   // Enabling CORS properly
   app.use(cors({
-    origin: [FRONTEND_URL], // This assumes FRONTEND_URL is an array which it currently is not; adjust accordingly.
+    origin: FRONTEND_URL, // This assumes FRONTEND_URL is an array which it currently is not; adjust accordingly.
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: "Content-Type, Authorization",
