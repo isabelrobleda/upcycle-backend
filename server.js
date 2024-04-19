@@ -1,16 +1,19 @@
-const app = require("./app");
+const app = require('./app');
 const https = require('https');
 const fs = require('fs');
+const PORT = process.env.PORT || 5005; // Use the PORT environment variable or default to 5005
 
-// ℹ️ Sets the PORT for our app to have access to it. If no env has been set, we hard code it to 5005
-const PORT = process.env.PORT || 5005;
-
-const options = {
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
-};
-
-// Start HTTPS server if certificates exist
-https.createServer(options, app).listen(PORT, '0.0.0.0', () => {
-  console.log(`HTTPS Server running on https://192.168.178.103:${PORT}`);
-});
+// Check if running in a secure environment and certificates are available
+if (process.env.NODE_ENV === 'production' && fs.existsSync('server.key') && fs.existsSync('server.cert')) {
+  const options = {
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  };
+  https.createServer(options, app).listen(PORT, () => {
+    console.log(`HTTPS Server running on port ${PORT}`);
+  });
+} else {
+  app.listen(PORT, () => {
+    console.log(`HTTP Server running on port ${PORT}`);
+  });
+}
