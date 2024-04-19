@@ -22,7 +22,7 @@ module.exports = (app) => {
 
   // controls a very specific header to pass headers from the frontend
   app.use(cors({
-    origin: ["https://192.168.178.103:5173", "https://upcyclemyhome.com", "https://localhost:5173"],
+    origin: [ "https://upcyclemyhome.com", "http://localhost:5173"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true // This is important if your frontend needs to handle cookies
 }));
