@@ -22,9 +22,10 @@ module.exports = (app) => {
 
   // controls a very specific header to pass headers from the frontend
   app.use(cors({
-    origin: [ "https://upcyclemyhome.com", "http://localhost:5173"],
+    origin: [ "https://upcyclemyhome.com", "http://localhost:5173", '*'],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true // This is important if your frontend needs to handle cookies
+    credentials: true, // This is important if your frontend needs to handle cookies
+    allowedHeaders: ['Content-Type']
 }));
 
   // In development environment the app logs
@@ -34,4 +35,6 @@ module.exports = (app) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
+  app.use(express.static('public'));
 };
+
