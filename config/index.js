@@ -21,12 +21,15 @@ module.exports = (app) => {
   app.set("trust proxy", 1);
 
   // controls a very specific header to pass headers from the frontend
-  app.use(cors({
-    origin: [ "https://upcyclemyhome.com", "http://localhost:5173", '*'],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true, // This is important if your frontend needs to handle cookies
-    allowedHeaders: ['Content-Type']
-}));
+  app.use(cors());
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    if(req.method === "OPTIONS"){
+      res.header("Access-Control-Allow-Methods", "POST, PUT, PATCH, DELETE, GET");
+      return res.status(200).json({});
+    }
+    next();
+  })
 
   // In development environment the app logs
   app.use(logger("dev"));
