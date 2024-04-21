@@ -23,13 +23,21 @@ module.exports = (app) => {
   // controls a very specific header to pass headers from the frontend
   app.use(cors());
   app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*", "https://upcyclemyhome.com/");
+    res.header("Access-Control-Allow-Origin", "https://upcyclemyhome.com/");
     if(req.method === "OPTIONS"){
       res.header("Access-Control-Allow-Methods", "POST, PUT, PATCH, DELETE, GET");
       return res.status(200).json({});
     }
     next();
   })
+
+  app.use((err, req, res, next) => {
+    console.error(err); // Log error information for debugging
+    res.status(err.status || 500).send({
+      message: err.message || 'An unknown error occurred.'
+    });
+  });
+  
 
   // In development environment the app logs
   app.use(logger("dev"));
