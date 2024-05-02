@@ -86,7 +86,7 @@ const sendEmail = (formData, files) => {
     });
 };
 
-router.post("/vendor-form", upload.array("UploadImages", 5), (req, res, next) => {
+router.post("/vendor-form", upload.array("UploadImages", 10), (req, res, next) => {
   
 
   const { FirstForm, ProductInformation, VendorInformation, PaymentInformation } = req.body;
