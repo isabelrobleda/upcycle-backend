@@ -41,7 +41,6 @@ const sendEmail = (formData, files) => {
       }\nPrecio si fuera nuevo: ${ProductInformation ? ProductInformation.priceInput : "N/A"
       }\nPrecio deseado: ${ProductInformation ? ProductInformation.desiredSellingPrice : "N/A"
       }\nPrecio aproximado: ${ProductInformation ? ProductInformation.approxSellingPrice : "N/A"
-      }\nMaterial: ${ProductInformation ? ProductInformation.material : "N/A"
       }\nCiudad: ${VendorInformation ? VendorInformation.city : "N/A"
       }\nCódigo Postal: ${VendorInformation ? VendorInformation.postalCode : "N/A"
       }\nCalle: ${VendorInformation ? VendorInformation.address : "N/A"
@@ -61,11 +60,7 @@ const sendEmail = (formData, files) => {
       }\nCelular: ${PaymentInformation ? PaymentInformation.phone : "N/A"
       }\nEmail: ${PaymentInformation ? PaymentInformation.name : "N/A"
       }\nNombre Completo: ${PaymentInformation ? PaymentInformation.fullName : "N/A"
-      }\nNacionalidad: ${PaymentInformation ? PaymentInformation.nationality : "N/A"
-      }\nGénero: ${PaymentInformation ? PaymentInformation.gender : "N/A"
-      }\nFecha de Nacimiento: ${PaymentInformation ? PaymentInformation.birthDate : "N/A"
-      }\nRazón de Venta: ${PaymentInformation ? PaymentInformation.reasonOfSale : "N/A"}
-    
+      }
       `,
       attachments: files.map((file) => {
         return {

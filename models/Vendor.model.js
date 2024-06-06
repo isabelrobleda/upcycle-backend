@@ -40,9 +40,6 @@ const vendorSchema = new Schema({
     weight: {
       type: Number,
     },
-    material: {
-      type: [String],
-    },
     UploadImage: {
       type: String,
     },
@@ -115,18 +112,6 @@ const vendorSchema = new Schema({
     fullName: {
       type: String,
     },
-    nationality: {
-      type: [String],
-    },
-    gender: {
-      type: [String],
-    },
-    birthDate: {
-      type: Date,
-    },
-    reasonOfSale: {
-      type: [String],
-    }
   },
 });
 
