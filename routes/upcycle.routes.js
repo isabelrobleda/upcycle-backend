@@ -83,6 +83,9 @@ router.post("/vendor-form", upload.array("UploadImages", 10), (req, res, next) =
   
   const files = req.files;
 
+  console.log("Request body:", req.body);  // Add this line
+  console.log("Files:", files);  // Add this line
+
    if (files) {
     files.forEach((file) => {
       console.log(file.path);
