@@ -21,7 +21,7 @@ const sendEmail = (formData, files) => {
     
     const mailOptions = {
       from: "hola@upcyclemex.com",
-      to: "hola@upcyclemex.com", 
+      to: "isabel.robleda@gmail.com", 
       subject: "Upcycle Forma Vendedor",
       text: `Datos del Vendedor:
       \nUrgencia: ${FirstForm ? FirstForm.Urgency : "N/A"}
@@ -64,16 +64,6 @@ const sendEmail = (formData, files) => {
         };
       }),
     };
-
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.error("Error sending email:", err);
-        reject(err);
-      } else {
-        console.log("Email sent:", info.response);
-        resolve(info);
-      }
-    });
 };
 
 router.post("/vendor-form", upload.array("UploadImages", 10), (req, res, next) => {
@@ -82,9 +72,6 @@ router.post("/vendor-form", upload.array("UploadImages", 10), (req, res, next) =
   const { FirstForm, ProductInformation, VendorInformation, PaymentInformation } = req.body;
   
   const files = req.files;
-
-  console.log("Request body:", req.body);  // Add this line
-  console.log("Files:", files);  // Add this line
 
    if (files) {
     files.forEach((file) => {
