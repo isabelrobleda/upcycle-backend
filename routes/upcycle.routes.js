@@ -64,6 +64,15 @@ const sendEmail = (formData, files) => {
         };
       }),
     };
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error("Error sending email:", err);
+        reject(err);
+      } else {
+        console.log("Email sent:", info.response);
+        resolve(info);
+      }
+    });
 };
 
 router.post("/vendor-form", upload.array("UploadImages", 10), (req, res, next) => {
