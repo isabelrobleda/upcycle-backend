@@ -21,7 +21,7 @@ const sendEmail = (formData, files) => {
     
     const mailOptions = {
       from: "hola@upcyclemex.com",
-      to: "isabel.robleda@gmail.com", 
+      to: "hola@upcyclemex.com", 
       subject: "Upcycle Forma Vendedor",
       text: `Datos del Vendedor:
       \nUrgencia: ${FirstForm ? FirstForm.Urgency : "N/A"}
